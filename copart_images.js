@@ -69,7 +69,7 @@ function getImageForExternal(
         console.log(date);
       return imageRead
         .quality(100)
-        .write(path.join(__dirname, `./storage/${make.toLowerCase()}/${make.toLowerCase()}-${model.toLowerCase()}-${year.toLowerCase()}-${color.toLowerCase()}-${VIN}_${number}.jpg`));
+        .write(path.join(__dirname, `/storage/${make.toLowerCase()}/${make.toLowerCase()}-${model.toLowerCase()}-${year.toLowerCase()}-${color.toLowerCase()}-${VIN}_${number}.jpg`));
     })
     .catch(err => {
       console.error(err);
