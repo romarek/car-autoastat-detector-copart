@@ -221,7 +221,7 @@ convertCSVtoJSON()
                             .then(keysReplace => {
                                 setTimeout(function() {
                                     postRecordsIntoDatabase();
-                                }, 15000)
+                                }, 25000)
                                 console.log('Proccess 3 finished!');
                             });
                     }, 10000);
