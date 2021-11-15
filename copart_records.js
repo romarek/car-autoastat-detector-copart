@@ -4,6 +4,7 @@ const https = require("https");
 const path = require('path');
 const StreamArray = require('stream-json/streamers/StreamArray');
 const {Writable} = require('stream');
+const sutil = require('line-stream-util');
 const axios = require('axios');
 const Jimp = require('jimp');
 
@@ -11,6 +12,7 @@ async function convertCSVtoJSON() {
     const filePath = path.join(__dirname, './salesdata.csv');
     let f = fs.readFileSync(filePath, {encoding: 'utf-8'}, 
         function(err){console.log(err);});
+    f = f.replace(/(High Bid =non-vix,Sealed=Vix)/, 'FinalBid');
     f = f.split("\n");
     headers = f.shift().split(",");
 
@@ -34,7 +36,7 @@ async function JSONedit() {
         if (err) {
           return console.log(err);
         }
-        var result = data.replace(/\\"/g, '');
+        var result = data.replaceAll(/\\"/ig, '');
         // var prettyResult = prettier.format(JSON.stringify(result),{ semi: false, parser: "json" });
         fs.writeFile('./salesdatatoimport.json', result, 'utf8', function (err) {
            if (err) return console.log(err);
@@ -49,44 +51,44 @@ async function JSONkeysReplace() {
           return console.log(err);
         }
         var result = data
-            .replace(/(Yard number)/g, 'YardNumber')
-            .replace(/(Yard name)/g, 'YardName')
-            .replace(/(Sale Date M\/D\/CY)/g, 'SaleDateMDCY')
-            .replace(/(Day of Week)/g, 'DayOfWeek')
-            .replace(/(Sale time \(HHMM\))/g, 'SaleTimeHHMM')
-            .replace(/(Time Zone)/g, 'TimeZone')
-            .replace(/(Lot number)/g, 'LotNumber')
-            .replace(/(Vehicle Type)/g, 'VehicleType')
-            .replace(/(Model Group)/g, 'ModelGroup')
-            .replace(/(Model Detail)/g, 'ModelDetail')
-            .replace(/(Body Style)/g, 'BodyStyle')
-            .replace(/(Damage Description)/g, 'DamageDescription')
-            .replace(/(Secondary Damage)/g, 'SecondaryDamage')
-            .replace(/(Sale Title State)/g, 'SaleTitleState')
-            .replace(/(Sale Title Type)/g, 'SaleTitleType')
-            .replace(/(Has Keys-Yes or No)/g, 'HasKeysYesOrNo')
-            .replace(/(Lot Cond. Code)/g, 'LotCondCode')
-            .replace(/(Est. Retail Value)/g, 'EstRetailValue')
-            .replace(/(Repair cost)/g, 'RepairCost')
-            .replace(/(Runs\/Drives)/g, 'RunsDrives')
-            .replace(/(Sale Status)/g, 'SaleStatus')
-            .replace(/(Location city)/g, 'LocationCity')
-            .replace(/(Location state)/g, 'LocationState')
-            .replace(/(Location ZIP)/g, 'LocationZIP')
-            .replace(/(Location country)/g, 'LocationCountry')
-            .replace(/(Currency Code)/g, 'CurrencyCode')
-            .replace(/(Image Thumbnail)/g, 'ImageThumbnail')
-            .replace(/(Create Date\/Time)/g, 'CreateDateTime')
-            .replace(/(Grid\/Row)/g, 'GridRow')
-            .replace(/(Make-an-Offer Eligible)/g, 'MakeAnOfferEligible')
-            .replace(/(Buy-It-Now Price)/g, 'BuyItNowPrice')
-            .replace(/(Last Updated Time)/g, 'LastUpdatedTime')
-            .replace(/(Image URL)/g, 'ImageURL')
-            .replace(/(High Bid)/g, 'HighBid')
-            .replace(/(Special Note)/, 'SpecialNote')
-            .replace(/(Fuel Type)/, 'FuelType')
-            .replace(/(Item#)/, 'Item')
-            .replace(/(Odometer Brand)/, 'OdometerBrand');
+            .replaceAll(/(Yard number)/ig, 'YardNumber')
+            .replaceAll(/(Yard name)/ig, 'YardName')
+            .replaceAll(/(Sale Date M\/D\/CY)/ig, 'SaleDateMDCY')
+            .replaceAll(/(Day of Week)/ig, 'DayOfWeek')
+            .replaceAll(/(Sale time \(HHMM\))/ig, 'SaleTimeHHMM')
+            .replaceAll(/(Time Zone)/ig, 'TimeZone')
+            .replaceAll(/(Lot number)/ig, 'LotNumber')
+            .replaceAll(/(Vehicle Type)/ig, 'VehicleType')
+            .replaceAll(/(Model Group)/ig, 'ModelGroup')
+            .replaceAll(/(Model Detail)/ig, 'ModelDetail')
+            .replaceAll(/(Body Style)/ig, 'BodyStyle')
+            .replaceAll(/(Damage Description)/ig, 'DamageDescription')
+            .replaceAll(/(Secondary Damage)/ig, 'SecondaryDamage')
+            .replaceAll(/(Sale Title State)/ig, 'SaleTitleState')
+            .replaceAll(/(Sale Title Type)/ig, 'SaleTitleType')
+            .replaceAll(/(Has Keys-Yes or No)/ig, 'HasKeysYesOrNo')
+            .replaceAll(/(Lot Cond. Code)/ig, 'LotCondCode')
+            .replaceAll(/(Est. Retail Value)/ig, 'EstRetailValue')
+            .replaceAll(/(Repair cost)/ig, 'RepairCost')
+            .replaceAll(/(Runs\/Drives)/ig, 'RunsDrives')
+            .replaceAll(/(Sale Status)/ig, 'SaleStatus')
+            .replaceAll(/(Location city)/ig, 'LocationCity')
+            .replaceAll(/(Location state)/ig, 'LocationState')
+            .replaceAll(/(Location ZIP)/ig, 'LocationZIP')
+            .replaceAll(/(Location country)/ig, 'LocationCountry')
+            .replaceAll(/(Currency Code)/ig, 'CurrencyCode')
+            .replaceAll(/(Image Thumbnail)/ig, 'ImageThumbnail')
+            .replaceAll(/(Create Date\/Time)/ig, 'CreateDateTime')
+            .replaceAll(/(Grid\/Row)/ig, 'GridRow')
+            .replaceAll(/(Make-an-Offer Eligible)/ig, 'MakeAnOfferEligible')
+            .replaceAll(/(Buy-It-Now Price)/ig, 'BuyItNowPrice')
+            .replaceAll(/(Last Updated Time)/ig, 'LastUpdatedTime')
+            .replaceAll(/(Image URL)/ig, 'ImageURL')
+            .replaceAll(/(High Bid)/ig, 'HighBid')
+            .replaceAll(/(Special Note)/ig, 'SpecialNote')
+            .replaceAll(/(Fuel Type)/ig, 'FuelType')
+            .replaceAll(/(Item#)/ig, 'Item')
+            .replaceAll(/(Odometer Brand)/ig, 'OdometerBrand');
         fs.writeFile('./salesdatatoimportfields.json', result, 'utf8', function (err) {
            if (err) return console.log(err);
         });
