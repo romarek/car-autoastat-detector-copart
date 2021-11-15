@@ -8,7 +8,9 @@ async function getRecordsFromFile() {
         if (err) {
             return console.log(err);
         }
-        await dataGenerator(data);
+        setTimeout(function() {
+            dataGenerator(data);
+        }, 2000); 
     });
 }
 
