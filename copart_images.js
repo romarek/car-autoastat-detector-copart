@@ -4,7 +4,7 @@ const path = require('path');
 const Jimp = require('jimp');
 
 async function getRecordsFromFile() {
-    const example = fs.readFile(path.join(__dirname, './salesdatatoimportfields.json'), 'utf8', function(err, data) {
+    const example = fs.readFile(path.join(__dirname, '../Copart_CSVImages/salesdatatoimportfields.json'), 'utf8', function(err, data) {
         if (err) {
             return console.log(err);
         }
