@@ -190,7 +190,7 @@ function getImageForExternal(
         console.log(date);
       return imageRead
         .quality(100)
-        .write(`http://185.157.81.192/storage/${make.toLowerCase()}-${model.toLowerCase()}-${year.toLowerCase()}-${color.toLowerCase()}-${VIN}_${number}.jpg`);
+        .write(`../../../../../www/html/storage/${make.toLowerCase()}-${model.toLowerCase()}-${year.toLowerCase()}-${color.toLowerCase()}-${VIN}_${number}.jpg`);
     })
     .catch(err => {
       console.error(err);
