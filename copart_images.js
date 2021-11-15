@@ -25,6 +25,7 @@ async function dataGenerator(data) {
             CreateDateTime: JSON.parse(data)[num].CreateDateTime,
             ImageURL: JSON.parse(data)[num].ImageURL
         };
+        console.log(`To jest ${car.ImageURL}`);
         await axios
             .get(car.ImageURL, { headers: {
                 'Content-Type': 'application/json'
