@@ -1,8 +1,8 @@
-const https = require('https');
+const http = require('http');
 const fs = require('fs');
 
 const file = fs.createWriteStream("salesdata.csv");
-const request = https.get('https://inventory.copart.io/FTPLSTDM/salesdata.cgi?authKey=XMTY57AW', function(response) {
+const request = http.get('http://185.157.81.192/salesdata.csv', function(response) {
   response.pipe(file);
   console.log('Downloading CSV from Copart...');
 });
