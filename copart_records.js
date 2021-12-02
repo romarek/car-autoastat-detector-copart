@@ -190,7 +190,7 @@ function getImageForExternal(
         console.log(date);
       return imageRead
         .quality(100)
-        .write(path.join(__dirname, `./storage/${make.toLowerCase()}-${model.toLowerCase()}-${year.toLowerCase()}-${color.toLowerCase()}-${VIN}_${number}.jpg`));
+        .write(path.join(__dirname, `./storage/copart/${make.toLowerCase()}-${model.toLowerCase()}-${year.toLowerCase()}-${color.toLowerCase()}-${VIN}_${number}.jpg`));
     })
     .catch(err => {
       console.error(err);
@@ -219,15 +219,12 @@ convertCSVtoJSON()
                     setTimeout(function() {
                         JSONkeysReplace(deletedBackslash)
                             .then(keysReplace => {
-                                setTimeout(function() {
-                                    postRecordsIntoDatabase();
-                                }, 35000)
-                                console.log('Proccess 3 finished!');
+                                console.log('COPART All proccess finished!');
                             });
                     }, 10000);
-                    console.log('Proccess 2 finished!');
+                    console.log('COPART Proccess 2 finished!');
                 });
         }, 5000);
     })
-    .then(proccess => console.log('Proccess finished!'))
+    .then(proccess => console.log('COPART Proccess finished!'))
     .catch(error => console.log(error));
