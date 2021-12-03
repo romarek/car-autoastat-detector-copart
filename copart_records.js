@@ -221,10 +221,10 @@ convertCSVtoJSON()
                             .then(keysReplace => {
                                 console.log('COPART All proccess finished!');
                             });
-                    }, 10000);
+                    }, 20000);
                     console.log('COPART Proccess 2 finished!');
                 });
-        }, 5000);
+        }, 10000);
     })
     .then(proccess => console.log('COPART Proccess finished!'))
     .catch(error => console.log(error));
