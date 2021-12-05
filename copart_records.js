@@ -9,7 +9,7 @@ const axios = require('axios');
 const Jimp = require('jimp');
 
 async function convertCSVtoJSON() {
-    const filePath = path.join(__dirname, './salesdata.csv');
+    const filePath = path.join(__dirname, './salesdata_filtered.csv');
     let f = fs.readFileSync(filePath, {encoding: 'utf-8'}, 
         function(err){console.log(err);});
     f = f.replace(/(High Bid =non-vix,Sealed=Vix)/, 'FinalBid');
