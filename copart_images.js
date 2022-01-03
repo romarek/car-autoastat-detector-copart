@@ -23,7 +23,8 @@ async function dataGenerator(data) {
             Color: JSON.parse(data)[num].Color,
             Year: JSON.parse(data)[num].Year,
             CreateDateTime: JSON.parse(data)[num].CreateDateTime,
-            ImageURL: JSON.parse(data)[num].ImageURL
+            ImageURL: JSON.parse(data)[num].ImageURL,
+            SaleDateMDCY: JSON.parse(data)[num].SaleDateMDCY
         };
         console.log(`To jest ${car.ImageURL}`);
         await axios
@@ -41,12 +42,13 @@ async function dataGenerator(data) {
                             car.Color,
                             car.Year,
                             car.VIN,
-                            car.CreateDateTime
+                            car.CreateDateTime,
+                            car.SaleDateMDCY
                         );
                     }
                 }
                 downloadImagesToStorage();
-                console.log(`Downloaded: ${car.VIN} - ${car.Make} ${car.ModelGroup} ${car.Year} ${car.Color}`);
+                console.log(`Downloaded: ${car.VIN} - ${car.Make} ${car.ModelGroup} ${car.Year} ${car.Color} | ${car.SaleDateMDCY}`);
             })
             .catch(function (error) {
                 console.log(error);
@@ -62,14 +64,15 @@ function getImageForExternal(
     color,
     year,
     VIN,
-    date
+    date,
+    sales
 ) {
     Jimp.read(imgURLToRestore)
     .then(imageRead => {
         console.log(date);
       return imageRead
         .quality(100)
-        .write(path.join(__dirname, `/storage/${make.toLowerCase()}/${make.toLowerCase()}-${model.toLowerCase()}-${year}-${color.toLowerCase()}-${VIN.toLowerCase()}_${number}.jpg`));
+        .write(path.join(__dirname, `/storage/${sales.toLowerCase()}/${make.toLowerCase()}/${make.toLowerCase()}-${model.toLowerCase()}-${year}-${color.toLowerCase()}-${VIN.toLowerCase()}_${number}.jpg`));
     })
     .catch(err => {
       console.error(err);
