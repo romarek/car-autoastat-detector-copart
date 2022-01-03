@@ -9,7 +9,7 @@ const axios = require('axios');
 const Jimp = require('jimp');
 
 async function convertCSVtoJSON() {
-    const filePath = path.join(__dirname, './salesdata_filtered.csv');
+    const filePath = path.join(__dirname, './salesdata.csv');
     let f = fs.readFileSync(filePath, {encoding: 'utf-8'}, 
         function(err){console.log(err);});
     f = f.replace(/(High Bid =non-vix,Sealed=Vix)/, 'FinalBid');
@@ -145,7 +145,8 @@ async function dataGenerator(data) {
             Color: JSON.parse(data)[num].Color,
             Year: JSON.parse(data)[num].Year,
             CreateDateTime: JSON.parse(data)[num].CreateDateTime,
-            ImageURL: JSON.parse(data)[num].ImageURL
+            ImageURL: JSON.parse(data)[num].ImageURL,
+            SaleDateMDCY: JSON.parse(data)[num].SaleDateMDCY
         };
         await axios
             .get(car.ImageURL, { headers: {
@@ -162,12 +163,13 @@ async function dataGenerator(data) {
                             car.Color,
                             car.Year,
                             car.VIN,
-                            car.CreateDateTime
+                            car.CreateDateTime,
+                            car.SaleDateMDCY
                         );
                     }
                 }
                 downloadImagesToStorage();
-                console.log(`Downloaded: ${car.VIN} - ${car.Make} ${car.ModelGroup} ${car.Year} ${car.Color}`);
+                console.log(`Downloaded: ${car.VIN} - ${car.Make} ${car.ModelGroup} ${car.Year} ${car.Color} | ${car.SaleDateMDCY}`);
             })
             .catch(function (error) {
                 console.log(error);
@@ -183,14 +185,15 @@ function getImageForExternal(
     color,
     year,
     VIN,
-    date
+    date,
+    sales
 ) {
     Jimp.read(imgURLToRestore)
     .then(imageRead => {
         console.log(date);
       return imageRead
         .quality(100)
-        .write(path.join(__dirname, `./storage/copart/${make.toLowerCase()}-${model.toLowerCase()}-${year.toLowerCase()}-${color.toLowerCase()}-${VIN}_${number}.jpg`));
+        .write(path.join(__dirname, `./storage/copart/${sales.toLowerCase()}/${make.toLowerCase()}-${model.toLowerCase()}-${year.toLowerCase()}-${color.toLowerCase()}-${VIN}_${number}.jpg`));
     })
     .catch(err => {
       console.error(err);
