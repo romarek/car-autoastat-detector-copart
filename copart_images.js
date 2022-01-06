@@ -46,7 +46,7 @@ async function dataGenerator(data) {
                     }
                 }
                 downloadImagesToStorage();
-                console.log(`Downloaded: ${car.VIN} - ${car.Make} ${car.ModelGroup} ${car.Year} ${car.Color});
+                console.log(`Downloaded: ${car.VIN} - ${car.Make} ${car.ModelGroup} ${car.Year} ${car.Color}`);
             })
             .catch(function (error) {
                 console.log(error);
