@@ -9,7 +9,7 @@ const axios = require('axios');
 const Jimp = require('jimp');
 
 async function convertCSVtoJSON() {
-    const filePath = path.join(__dirname, './salesdata.csv');
+    const filePath = path.join(__dirname, './salesdata_filtered.csv');
     let f = fs.readFileSync(filePath, {encoding: 'utf-8'}, 
         function(err){console.log(err);});
     f = f.replace(/(High Bid =non-vix,Sealed=Vix)/, 'FinalBid');
@@ -145,8 +145,7 @@ async function dataGenerator(data) {
             Color: JSON.parse(data)[num].Color,
             Year: JSON.parse(data)[num].Year,
             CreateDateTime: JSON.parse(data)[num].CreateDateTime,
-            ImageURL: JSON.parse(data)[num].ImageURL,
-            SaleDateMDCY: JSON.parse(data)[num].SaleDateMDCY
+            ImageURL: JSON.parse(data)[num].ImageURL
         };
         await axios
             .get(car.ImageURL, { headers: {
@@ -185,15 +184,14 @@ function getImageForExternal(
     color,
     year,
     VIN,
-    date,
-    sales
+    date
 ) {
     Jimp.read(imgURLToRestore)
     .then(imageRead => {
         console.log(date);
       return imageRead
         .quality(100)
-        .write(path.join(__dirname, `./storage/copart/${sales.toLowerCase()}/${make.toLowerCase()}-${model.toLowerCase()}-${year.toLowerCase()}-${color.toLowerCase()}-${VIN}_${number}.jpg`));
+        .write(path.join(__dirname, `./storage/copart/${make.toLowerCase()}-${model.toLowerCase()}-${year.toLowerCase()}-${color.toLowerCase()}-${VIN}_${number}.jpg`));
     })
     .catch(err => {
       console.error(err);
