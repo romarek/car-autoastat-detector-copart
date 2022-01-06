@@ -10,7 +10,7 @@ async function getRecordsFromFile() {
         }
         setTimeout(function() {
             dataGenerator(data);
-        }, 2000); 
+        }, 1000); 
     });
 }
 
@@ -23,8 +23,7 @@ async function dataGenerator(data) {
             Color: JSON.parse(data)[num].Color,
             Year: JSON.parse(data)[num].Year,
             CreateDateTime: JSON.parse(data)[num].CreateDateTime,
-            ImageURL: JSON.parse(data)[num].ImageURL,
-            SaleDateMDCY: JSON.parse(data)[num].SaleDateMDCY
+            ImageURL: JSON.parse(data)[num].ImageURL
         };
         console.log(`To jest ${car.ImageURL}`);
         await axios
@@ -42,13 +41,12 @@ async function dataGenerator(data) {
                             car.Color,
                             car.Year,
                             car.VIN,
-                            car.CreateDateTime,
-                            car.SaleDateMDCY
+                            car.CreateDateTime
                         );
                     }
                 }
                 downloadImagesToStorage();
-                console.log(`Downloaded: ${car.VIN} - ${car.Make} ${car.ModelGroup} ${car.Year} ${car.Color} | ${car.SaleDateMDCY}`);
+                console.log(`Downloaded: ${car.VIN} - ${car.Make} ${car.ModelGroup} ${car.Year} ${car.Color});
             })
             .catch(function (error) {
                 console.log(error);
@@ -64,15 +62,14 @@ function getImageForExternal(
     color,
     year,
     VIN,
-    date,
-    sales
+    date
 ) {
     Jimp.read(imgURLToRestore)
     .then(imageRead => {
         console.log(date);
       return imageRead
         .quality(100)
-        .write(path.join(__dirname, `/storage/${sales.toLowerCase()}/${make.toLowerCase()}/${make.toLowerCase()}-${model.toLowerCase()}-${year}-${color.toLowerCase()}-${VIN.toLowerCase()}_${number}.jpg`));
+        .write(path.join(__dirname, `/storage/${make.toLowerCase()}/${make.toLowerCase()}-${model.toLowerCase()}-${year}-${color.toLowerCase()}-${VIN.toLowerCase()}_${number}.jpg`));
     })
     .catch(err => {
       console.error(err);
