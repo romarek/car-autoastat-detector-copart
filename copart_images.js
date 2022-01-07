@@ -10,7 +10,7 @@ async function getRecordsFromFile() {
         }
         setTimeout(function() {
             dataGenerator(data);
-        }, 1000); 
+        }, 500); 
     });
 }
 
